@@ -1,0 +1,5 @@
+*.csv
+*.bin
+__pycache__/*
+venv/*
+*.xls*
