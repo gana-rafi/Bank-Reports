@@ -31,6 +31,6 @@ class BankTransaction:
     reference: str
     amount: int
     balance: int
-    value_date: datetime
+    value_date: datetime.datetime
     action_type: Action
     domain: life.Domain = life.Domain.UNSPECIFIED

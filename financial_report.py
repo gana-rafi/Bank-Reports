@@ -1,6 +1,5 @@
 import argparse, os, csv
-from datetime import datetime
-import bank, credit_card, financial_analyst, poalim, leumi
+import bank, credit_card, poalim, leumi, marcentile, config
 
 
 def load_credit_reports(reports_fnames):    
@@ -14,8 +13,9 @@ def load_credit_reports(reports_fnames):
 
 def load_bank_reports(bank_reports: list[list[str]]):
     parsed_report = []
-    supported_reports = {'poalim': poalim.parse_transaction,
-                         'leumi': leumi.parse_transaction}
+    supported_reports = {config.POALIM_FILE_PREFIX: poalim.parse_transaction,
+                         config.LEUMI_FILE_PREFIX: leumi.parse_transaction,
+                         config.MERCANTILE_FILE_PREFIX: marcentile.parse_transaction}
     for report in bank_reports:
         for report_filename in report:
             report_type = os.path.basename(report_filename).split('_')[0]
@@ -26,7 +26,7 @@ def load_bank_reports(bank_reports: list[list[str]]):
 
 def create_expenses_report(bank_report, credit_report, report_filename):
     csv_rows = list()
-    with open('expenses_' + report_filename, 'w') as csvfile:
+    with open(f'{config.EXPENSES_OUT_FILE_PREFIX}_{report_filename}', 'w') as csvfile:
         fieldnames = ['דו"ח מקורי', 'תאריך', 'עבור', 'סכום', 'אסמכתא', 'פרטים', 'תחום', 'הערה']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -67,7 +67,7 @@ def create_expenses_report(bank_report, credit_report, report_filename):
 
 def create_income_report(bank_report, report_filename):
     csv_rows = list()
-    with open('income_' + report_filename, 'w') as csvfile:
+    with open(f'{config.INCOME_OUT_FILE_PREFIX}_{report_filename}', 'w') as csvfile:
         fieldnames = ['דו"ח מקורי', 'תאריך', 'מקור', 'סכום', 'אסמכתא', 'פרטים', 'תחום', 'הערה']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -105,13 +105,14 @@ if __name__ == '__main__':
 
     min_date = min(t.date for t in bank_report + credit_report)
     max_date = max(t.date for t in bank_report + credit_report)
-    report_filename = f"{min_date.strftime('%Y%m%d')}_{max_date.strftime('%Y%m%d')}.csv"
+    expenses_report_filename = f"{config.EXPENSES_OUT_FILE_PREFIX}_{min_date.strftime('%Y%m%d')}_{max_date.strftime('%Y%m%d')}.csv"
+    income_report_filename = f"{config.INCOME_OUT_FILE_PREFIX}_{min_date.strftime('%Y%m%d')}_{max_date.strftime('%Y%m%d')}.csv"
 
     if args.dump_expenses:
-        create_expenses_report(bank_report, credit_report, report_filename)
+        create_expenses_report(bank_report, credit_report, expenses_report_filename)
 
     if args.dump_incomes:
-        create_income_report(bank_report, report_filename)
+        create_income_report(bank_report, income_report_filename)
 
     if args.print_expenses:
         s = 0
