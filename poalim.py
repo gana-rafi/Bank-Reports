@@ -5,6 +5,7 @@ from bank import Action, BankTransaction, Corp
 
 def parse_action(s):
     return {"מסטרקרד": Action.CREDIT_CARD,
+            'יד שרה (ע"ר)': Action.CASH_CHECK,
             "העב' לאחר-נייד": Action.TRANSFER,
             "איילון חברה": Action.STANDING_ORDER,
             "פרימיום אקספרס": Action.CREDIT_CARD,
