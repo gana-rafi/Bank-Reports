@@ -26,8 +26,8 @@ def load_bank_reports(bank_reports: list[list[str]]):
 
 def create_expenses_report(bank_report, credit_report, report_filename):
     csv_rows = list()
-    with open(f'{config.EXPENSES_OUT_FILE_PREFIX}_{report_filename}', 'w') as csvfile:
-        fieldnames = ['דו"ח מקורי', 'תאריך', 'עבור', 'סכום', 'אסמכתא', 'פרטים', 'תחום', 'הערה']
+    with open(report_filename, 'w') as csvfile:
+        fieldnames = ['דו"ח מקורי', 'תאריך', 'תחום', 'עבור', 'סכום', 'אסמכתא', 'פרטים', 'הערה']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
@@ -67,7 +67,7 @@ def create_expenses_report(bank_report, credit_report, report_filename):
 
 def create_income_report(bank_report, report_filename):
     csv_rows = list()
-    with open(f'{config.INCOME_OUT_FILE_PREFIX}_{report_filename}', 'w') as csvfile:
+    with open(report_filename, 'w') as csvfile:
         fieldnames = ['דו"ח מקורי', 'תאריך', 'מקור', 'סכום', 'אסמכתא', 'פרטים', 'תחום', 'הערה']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
