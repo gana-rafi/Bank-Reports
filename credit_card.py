@@ -59,7 +59,8 @@ def parse(filename):
                 continue
 
             amount = row.get('סכום עסקה', row.get('סכום מקורי'))
-            
+            if amount is None:
+                continue  # Skip rows with no amount
             details = row.get('פירוט נוסף')
             details = details if details == details else ''
 
@@ -82,8 +83,6 @@ def parse(filename):
                                             details,
                                             life.guess_domain(row['שם בית עסק']))
             report.append(transaction)
-        
-
     return report
 
 

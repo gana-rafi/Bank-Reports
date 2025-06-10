@@ -35,34 +35,32 @@ def create_expenses_report(bank_report, credit_report, report_filename):
             row = dict.fromkeys(fieldnames)
             row['דו"ח מקורי'] = transaction.filename
             row['תאריך'] = transaction.date.strftime('%d/%m/%Y')
-            row['עבור'] = transaction.buisness
+            row['עבור'] = getattr(transaction, 'business', getattr(transaction, 'buisness', ''))
             row['סכום'] = transaction.billing_amount
             row['אסמכתא'] = transaction.reference
             row['פרטים'] = transaction.details
-            row['תחום'] = transaction.domain
-            row['הערה'] = transaction.note
-
+            row['תחום'] = getattr(transaction, 'domain', '')
+            row['הערה'] = getattr(transaction, 'note', '')
             csv_rows.append(row)
 
         for transaction in bank_report:
-            if transaction.action_type == bank.Action.CREDIT_CARD or\
-                transaction.amount > 0:
+            # Only include negative amounts (expenses) and skip credit card payments
+            if getattr(transaction, 'action_type', None) == bank.Action.CREDIT_CARD or \
+                getattr(transaction, 'amount', 0) >= 0:
                 continue
-            
             row = dict.fromkeys(fieldnames)
             row['דו"ח מקורי'] = transaction.filename
             row['תאריך'] = transaction.date.strftime('%d/%m/%Y')
-            row['עבור'] = transaction.action
+            row['עבור'] = getattr(transaction, 'action', '')
             row['סכום'] = abs(transaction.amount)
             row['אסמכתא'] = transaction.reference
             row['פרטים'] = transaction.details
-            row['תחום'] = transaction.domain
+            row['תחום'] = getattr(transaction, 'domain', '')
             row['הערה'] = ''
-
             csv_rows.append(row)
 
         for row in csv_rows:
-                writer.writerow(row)
+            writer.writerow(row)
 
 
 def create_income_report(bank_report, report_filename):
@@ -73,19 +71,18 @@ def create_income_report(bank_report, report_filename):
 
         writer.writeheader()
         for transaction in bank_report:
-            if transaction.amount < 0:
+            # Only include positive amounts (income)
+            if getattr(transaction, 'amount', 0) <= 0:
                 continue
-
             row = dict.fromkeys(fieldnames)
             row['דו"ח מקורי'] = transaction.filename
             row['תאריך'] = transaction.date.strftime('%d/%m/%Y')
-            row['מקור'] = transaction.action
+            row['מקור'] = getattr(transaction, 'action', '')
             row['סכום'] = transaction.amount
             row['אסמכתא'] = transaction.reference
             row['פרטים'] = transaction.details
-            row['תחום'] = transaction.domain
+            row['תחום'] = getattr(transaction, 'domain', '')
             row['הערה'] = ''
-
             writer.writerow(row)
 
 

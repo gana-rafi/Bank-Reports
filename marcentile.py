@@ -21,8 +21,6 @@ def parse_action(s):
             'הו"ק לגנה אתי אסתר לסניף 09-001': Action.STANDING_ORDER,
             'הוט מערכות חיוב': Action.STANDING_ORDER,
             'הפקדה לפיקדון הו"ק 3 שנים': Action.TRANSFER,
-            'חברת החשמל חיוב': Action.STANDING_ORDER,
-            'חברת החשמל לישראל בע"מ חיוב': Action.STANDING_ORDER,
             'חברת פרטנר חיוב': Action.STANDING_ORDER,
             'חברת פרטנר תקשורת בע"מ חיוב': Action.STANDING_ORDER,
             'חיוב לכרטיס ויזה 1468': Action.CREDIT_CARD,

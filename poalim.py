@@ -51,7 +51,11 @@ def parse_transaction(filename):
     report = []
     for pd_row in xls_report.iterrows():
         row = pd_row[1]
-        amount = row['חובה'] * -1 if math.isnan(row['זכות']) else row['זכות']
+        # Fix: handle both חובה and זכות being NaN
+        if math.isnan(row['חובה']) and math.isnan(row['זכות']):
+            amount = 0
+        else:
+            amount = row['חובה'] * -1 if math.isnan(row['זכות']) else row['זכות']
 
         details = row['פרטים']
         details = details if details == details else ''

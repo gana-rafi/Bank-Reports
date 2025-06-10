@@ -24,13 +24,11 @@ def parse_action(s):
             "מסלול בסיסי": Action.UNKNOWN,
             "מפעל הפיס-זכ-י": Action.TRANSFER,
             'מקס איט פיננ-י': Action.CREDIT_CARD,
-            "מרכנתיל די.-י": Action.TRANSFER,
             "משיכת חיסכון": Action.TRANSFER,
             "משיכת מזומן ": Action.CASH_CHECK,
             "עמלה ": Action.COMMISSION,
             "פרעון הלוואה": Action.TRANSFER,
             "שירותי בריאו-י": Action.STANDING_ORDER}[s]
-
 
 
 def parse_account_number(cell):
@@ -51,7 +49,6 @@ def find_report_start(report):
             return i
         
     raise Exception('No report found in file')
-
 
 
 def parse_transaction(filename):
