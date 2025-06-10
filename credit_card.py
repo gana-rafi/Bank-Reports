@@ -59,16 +59,15 @@ def parse(filename):
                 continue
 
             amount = row.get('סכום עסקה', row.get('סכום מקורי'))
-            
+            if amount is None:
+                continue  # Skip rows with no amount
             details = row.get('פירוט נוסף')
             details = details if details == details else ''
 
             reference = row.get('מספר שובר')
             reference = reference if reference == reference else ''
-            
 
-            billing_date =  datetime.datetime.strptime(row.get('תאריך חיוב'), '%d/%m/%Y') if 'תאריך חיוב' in row else ''
-            assert amount is not None, 'amount cannot be None'
+            billing_date =  datetime.datetime.strptime(row.get('תאריך חיוב'), '%d/%m/%Y') if 'תאריך חיוב' in row and row.get('תאריך חיוב') else ''
             transaction = CreditTransaction(filename,
                                             card_number.strip(),
                                             datetime.datetime.strptime(row['תאריך רכישה'], '%d/%m/%Y'),
@@ -82,8 +81,6 @@ def parse(filename):
                                             details,
                                             life.guess_domain(row['שם בית עסק']))
             report.append(transaction)
-        
-
     return report
 
 
