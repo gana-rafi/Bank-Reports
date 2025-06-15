@@ -34,3 +34,5 @@ In the Future:
 1. add budget planning
 1. create react native app
    * reminders for budget
+   * alerts for budget overdraft
+1. add shopping habits and insights
