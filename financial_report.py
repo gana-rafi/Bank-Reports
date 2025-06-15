@@ -1,6 +1,7 @@
 import argparse, os, csv
 import bank, credit_card, poalim, leumi, marcentile, config
 
+# TODO: change income to expense in reverse. from, to, amount. domain will be salery, gift, loan etc.
 
 def load_credit_reports(reports_fnames):    
     parsed_report = []
