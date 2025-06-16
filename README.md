@@ -24,7 +24,9 @@ In the Future:
 
 ## TODO:
 1. create a react frontend and a flask server as an MVP.
-   1. upload bank report and disect it in the server.
+   1. upload bank report
+   ==vvv DONE vvv==
+   1. disect it in the server.
    1. add select for manually editing the report.
       * buissness domain - will be saved on the server for future autofill
    1. add checkbox to remove hide line from report

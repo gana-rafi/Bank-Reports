@@ -1,6 +1,6 @@
 import pandas as pd
 import math
-from bank import Action, BankTransaction, Corp
+from .bank import Action, BankTransaction, Corp
 
 
 def parse_action(s):
