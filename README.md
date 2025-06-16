@@ -29,6 +29,7 @@ In the Future:
       * buissness domain - will be saved on the server for future autofill
    1. add checkbox to remove hide line from report
    1. upload credit card report and disect it in the server.
+      * link to bank activity
    
 1. create logins using LDAP
 1. add budget planning
@@ -36,3 +37,9 @@ In the Future:
    * reminders for budget
    * alerts for budget overdraft
 1. add shopping habits and insights
+1. add salary upload
+   * link to bank activity
+1. add pension upload
+   * link to bank activity
+1. add Keren hishtalmut upload
+   * link to salary and bank activity
