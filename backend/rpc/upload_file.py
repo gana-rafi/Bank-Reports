@@ -58,7 +58,7 @@ def upload_file(filename, content, metadata = None, conflict='error'):
             with open(filepath, 'ab') as f:
                 f.write(file_bytes)
             return {"message": "Content appended", "filename": os.path.basename(filepath)}
-        elif conflict == "overwrite":
+        elif conflict == "replace":
             pass  # Will overwrite below
         else:
             raise exceptions.InvalidParameterException('conflict')

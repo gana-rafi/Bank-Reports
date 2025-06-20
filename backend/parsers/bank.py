@@ -1,23 +1,24 @@
 import datetime, enum, csv
 from dataclasses import dataclass
 import life
+from enum import StrEnum
 
 
-class Corp(enum.Enum):
-    OTHER = 0,
-    LEUMI = 10,
-    POALIM = 12,
-    MERCANTILE = 17,
+class Corp(StrEnum):
+    OTHER = "OTHER"
+    LEUMI = "LEUMI"
+    POALIM = "POALIM"
+    MERCANTILE = "MERCANTILE"
 
 
-class Action(enum.Enum):
-    CREDIT_CARD = 1,
-    TRANSFER = 2,
-    CASH_CHECK = 3,
-    STANDING_ORDER = 4,
-    FOREX = 5,
-    COMMISSION = 6,
-    UNKNOWN = 7
+class Action(StrEnum):
+    CREDIT_CARD = "CREDIT_CARD"
+    TRANSFER = "TRANSFER"
+    CASH_CHECK = "CASH_CHECK"
+    STANDING_ORDER = "STANDING_ORDER"
+    FOREX = "FOREX"
+    COMMISSION = "COMMISSION"
+    UNKNOWN = "UNKNOWN"
 
 
 @dataclass

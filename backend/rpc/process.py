@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 
 from . import exceptions
 from .upload_file import UPLOAD_FOLDER
+import traceback
 
 def process_file(filename, type):
     if type not in 'bank credit'.split():
@@ -21,6 +22,8 @@ def process_file(filename, type):
     try:
         report = parse_transaction(filepath)
     except Exception as e:
+        print(e)
+        traceback.print_exc()
         raise ParsingException from e
     
     return {
