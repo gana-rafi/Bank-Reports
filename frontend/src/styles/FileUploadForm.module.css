@@ -1,0 +1,15 @@
+/* FileUploadForm.module.css */
+.form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+input[type="file"] {
+  margin-right: 8px;
+}
+select {
+  margin-left: 8px;
+}
+button {
+  margin-left: 8px;
+}

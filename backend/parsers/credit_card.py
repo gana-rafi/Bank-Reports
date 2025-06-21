@@ -1,7 +1,7 @@
 import datetime, csv
 from dataclasses import dataclass
 import pandas as pd
-import life
+import backend.editor.domains as domains
 
 
 @dataclass
@@ -17,7 +17,7 @@ class CreditTransaction:
     billing_currency: str
     reference: str
     details: str
-    domain: life.Domain = life.Domain.UNSPECIFIED
+    domain: domains.Domain = domains.Domain.UNSPECIFIED
     note: str = ''
 
 
@@ -81,7 +81,7 @@ def parse(filename):
                                             row['מטבע לחיוב'],
                                             reference,
                                             details,
-                                            life.guess_domain(row['שם בית עסק']))
+                                            domains.guess_domain(row['שם בית עסק']))
             report.append(transaction)
     return report
 

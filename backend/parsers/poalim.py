@@ -1,27 +1,7 @@
 import pandas as pd
 import math
 from .bank import Action, BankTransaction, Corp
-
-
-def parse_action(s):
-    return {"מסטרקרד": Action.CREDIT_CARD,
-            'זיכוי מדיסקונט': Action.TRANSFER,
-            'יד שרה (ע"ר)': Action.CASH_CHECK,
-            "העב' לאחר-נייד": Action.TRANSFER,
-            "איילון חברה": Action.STANDING_ORDER,
-            "פרימיום אקספרס": Action.CREDIT_CARD,
-            "הפק.שיק בסלולר": Action.CASH_CHECK,
-            "זיכוי מלאומי": Action.TRANSFER,
-            "ישראכרט בע\"מ": Action.CREDIT_CARD,
-            "bit העברת כסף": Action.TRANSFER,
-            "תשלום שובר-נט": Action.TRANSFER,
-            "שיק": Action.CASH_CHECK,
-            "מגדל חברה לביט": Action.STANDING_ORDER,
-            "העברה-נייד": Action.TRANSFER,
-            "העברה": Action.TRANSFER,
-            "מטח": Action.FOREX,
-            "מטח-מכירה": Action.FOREX}[s]
-
+from editor import actions
 
 
 def parse_account_number(cell):
@@ -71,7 +51,7 @@ def parse_transaction(filename):
                                         amount,
                                         row["יתרה בש''ח"],
                                         row['תאריך ערך'].to_pydatetime(),
-                                        parse_action(row['הפעולה']))
+                                        actions.parse_action(row['הפעולה']))
         report.append(transaction)
 
     return report

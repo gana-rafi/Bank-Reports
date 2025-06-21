@@ -1,0 +1,29 @@
+/* DomainSidebar.module.css */
+.sidebar {
+  min-width: 180px;
+  margin-right: 24px;
+  border-right: 1px solid #ddd;
+  padding-right: 16px;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: fit-content;
+  background: #fff;
+  z-index: 2;
+}
+.domainList {
+  list-style: none;
+  padding: 0;
+}
+.domainItem {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

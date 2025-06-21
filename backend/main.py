@@ -18,14 +18,13 @@ def handle_rpc():
         return jsonrpc_error(-32700, "Parse error", None), 400
     
     method = data.get("method")
+    rpc_id = data.get("id")
+    params = data.get("params", {})
     if method not in rpc.methods:
         return jsonrpc_error(-32601, "Method not found", rpc_id), 400
 
     if not isinstance(data, dict) or data.get("jsonrpc") != "2.0":
         return jsonrpc_error(-32600, "Invalid Request", data.get("id")), 400
-
-    params = data.get("params", {})
-    rpc_id = data.get("id")
 
     try: 
         try:

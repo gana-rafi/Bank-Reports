@@ -1,7 +1,8 @@
-import datetime, enum, csv
+import datetime
 from dataclasses import dataclass
-import life
 from enum import StrEnum
+from editor.actions import Action
+import editor.domains as domains
 
 
 class Corp(StrEnum):
@@ -9,16 +10,6 @@ class Corp(StrEnum):
     LEUMI = "LEUMI"
     POALIM = "POALIM"
     MERCANTILE = "MERCANTILE"
-
-
-class Action(StrEnum):
-    CREDIT_CARD = "CREDIT_CARD"
-    TRANSFER = "TRANSFER"
-    CASH_CHECK = "CASH_CHECK"
-    STANDING_ORDER = "STANDING_ORDER"
-    FOREX = "FOREX"
-    COMMISSION = "COMMISSION"
-    UNKNOWN = "UNKNOWN"
 
 
 @dataclass
@@ -34,4 +25,4 @@ class BankTransaction:
     balance: int
     value_date: datetime.datetime
     action_type: Action
-    domain: life.Domain = life.Domain.UNSPECIFIED
+    domain: domains.Domain = domains.Domain.UNSPECIFIED

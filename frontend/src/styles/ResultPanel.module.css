@@ -1,0 +1,11 @@
+/* ResultPanel.module.css */
+.resultPanel {
+  margin-top: 24px;
+}
+.jsonResult {
+  background: #f4f4f4;
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 0.95em;
+  overflow-x: auto;
+}

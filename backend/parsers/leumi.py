@@ -1,35 +1,8 @@
 import math
 import pandas as pd
 from datetime import datetime
-from bank import Action, Corp, BankTransaction
-
-
-def parse_action(s):
-    print('DO THIS WITH ORLY! ADD ACTIONS IF NEEDED')
-    return {"מסטרקרד": Action.CREDIT_CARD,
-            "ביטוח לאומי-י": Action.TRANSFER,
-            'ביטוח.ל-אזו"-י': Action.TRANSFER,
-            'הו"ק לחיסכון': Action.STANDING_ORDER,
-            "הוראת קבע": Action.STANDING_ORDER,
-            "העברה בנקאית": Action.TRANSFER,
-            "מב. הפועלים-י": Action.TRANSFER,
-            "מרכנתיל די.-י": Action.TRANSFER,
-            "הפקדה לחיסכון": Action.TRANSFER,
-            "ויזה כ.א.ל-י": Action.CREDIT_CARD,
-            'ישראכרט בע"מ-י': Action.CREDIT_CARD,
-            "כ.הפק` מזומן ": Action.CASH_CHECK,
-            'לאומי ויזה': Action.CREDIT_CARD,
-            'לאומי מאסטרקרד': Action.CREDIT_CARD,
-            'לאומי קארד': Action.CREDIT_CARD,
-            "מסלול בסיסי": Action.UNKNOWN,
-            "מפעל הפיס-זכ-י": Action.TRANSFER,
-            'מקס איט פיננ-י': Action.CREDIT_CARD,
-            "משיכת חיסכון": Action.TRANSFER,
-            "משיכת מזומן ": Action.CASH_CHECK,
-            "עמלה ": Action.COMMISSION,
-            "פרעון הלוואה": Action.TRANSFER,
-            "שירותי בריאו-י": Action.STANDING_ORDER}[s]
-
+from bank import Corp, BankTransaction
+from editor import actions
 
 def parse_account_number(cell):
     return cell.replace('\u200e', '').replace('\u200f', '').split(' ')[-1]
@@ -76,7 +49,7 @@ def parse_transaction(filename):
                                         amount,
                                         row['היתרה בש"ח'],
                                         datetime.strptime(row['תאריך ערך'], '%d/%m/%y'),
-                                        parse_action(row['תיאור']))
+                                        actions.parse_action(row['תיאור']))
         except Exception as e:
             print(e)
             print("FIX THIS. REPORT IS NOT CONSISTANT!!!")
