@@ -52,7 +52,6 @@ function TransactionTable({
                 className={styles.td}
                 style={{
                   borderLeft: colIdx === 0 && row.domain ? `8px solid ${getDomainColor(row.domain)}` : undefined,
-                  color: colIdx === 0 && row.domain ? getDomainFontColor(row.domain) : undefined
                 }}
               >
                 {col === "domain" ? (
