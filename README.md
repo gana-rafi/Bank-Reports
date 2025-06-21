@@ -16,9 +16,12 @@ A modern, modular React app for uploading, processing, and categorizing financia
 
 ## Setup
 ```bash
+cd frontend
 npm install
-npm install prop-types
 npm start
+
+cd backend 
+uv run main.py
 ```
 
 ## Folder Structure
