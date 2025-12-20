@@ -1,7 +1,7 @@
 import datetime, csv
 from dataclasses import dataclass
 import pandas as pd
-import backend.editor.domains as domains
+import editor.domains as domains
 
 
 @dataclass

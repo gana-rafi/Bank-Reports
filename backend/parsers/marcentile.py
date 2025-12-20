@@ -1,7 +1,7 @@
 import traceback
 
 import pandas as pd
-from bank import Action, Corp, BankTransaction
+from .bank import Action, Corp, BankTransaction
 from editor import actions
 
 def parse_account_number(cell):

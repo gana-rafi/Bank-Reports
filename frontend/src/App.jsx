@@ -11,7 +11,7 @@ import './styles/App.module.css';
 
 function App() {
   const [file, setFile] = useState(null);
-  const [type, setType] = useState('bank');
+  const [type, setType] = useState('poalim');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

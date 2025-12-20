@@ -1,5 +1,8 @@
 import os
-from parsers.poalim import parse_transaction
+from parsers.poalim import parse_transaction as poalim
+from parsers.leumi import parse_transaction as leumi
+from parsers.marcentile import parse_transaction as marcentile
+from parsers.credit_card import parse as credit_card
 from parsers.exceptions import ParsingException
 from werkzeug.utils import secure_filename
 
@@ -8,7 +11,7 @@ from .upload_file import UPLOAD_FOLDER
 import traceback
 
 def process_file(filename, type):
-    if type not in 'bank credit'.split():
+    if type not in 'poalim leumi marcentile credit'.split():
         raise exceptions.InvalidParameterException('type')
 
     safe_name = secure_filename(filename)
@@ -20,7 +23,10 @@ def process_file(filename, type):
         raise exceptions.InvalidParameterException('filename')
 
     try:
-        report = parse_transaction(filepath)
+        report = {"poalim": poalim,
+                  "leumi": leumi,
+                  "marcentile": marcentile,
+                  "credit": credit_card}[type](filepath)
     except Exception as e:
         print(e)
         traceback.print_exc()

@@ -17,7 +17,9 @@ function FileUploadForm({ file, loading, type, onFileChange, onTypeChange, onSub
     <form className={styles.form} onSubmit={onSubmit}>
       <input type="file" onChange={onFileChange} />
       <select value={type} onChange={onTypeChange} style={{ marginLeft: 8 }}>
-        <option value="bank">Bank</option>
+        <option value="poalim">Poalim</option>
+        <option value="leumi">Leumi</option>
+        <option value="marcentile">Marcentile</option>
         <option value="credit">Credit</option>
       </select>
       <button type="submit" disabled={!file || loading} style={{ marginLeft: 8 }}>

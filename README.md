@@ -18,7 +18,7 @@ A modern, modular React app for uploading, processing, and categorizing financia
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 
 cd backend 
 uv run main.py

@@ -1,7 +1,7 @@
 import math
 import pandas as pd
 from datetime import datetime
-from bank import Corp, BankTransaction
+from .bank import Corp, BankTransaction
 from editor import actions
 
 def parse_account_number(cell):
