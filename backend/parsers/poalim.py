@@ -12,7 +12,7 @@ def find_account_number(report):
     for v in report['Unnamed: 0']:
         if v == v and 'מספר חשבון' in v:
             return parse_account_number(v)
-        
+    return 'Account Number Not Found'
     raise Exception('No account number in this report')
 
 
