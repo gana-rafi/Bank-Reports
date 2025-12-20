@@ -1,5 +1,6 @@
 import os
 from parsers.poalim import parse_transaction
+from parsers.credit_card import parse
 from parsers.exceptions import ParsingException
 from werkzeug.utils import secure_filename
 
@@ -20,7 +21,10 @@ def process_file(filename, type):
         raise exceptions.InvalidParameterException('filename')
 
     try:
-        report = parse_transaction(filepath)
+        if type == 'credit':
+            report = parse(filepath)
+        else:
+            report = parse_transaction(filepath)
     except Exception as e:
         print(e)
         traceback.print_exc()
