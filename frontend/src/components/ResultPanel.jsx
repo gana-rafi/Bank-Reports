@@ -16,6 +16,10 @@ import styles from '../styles/ResultPanel.module.css';
  * @param {Object} props.sortConfig
  * @param {Function} props.handleSort
  * @param {Function} props.formatDateCell
+ * @param {Function} props.onRowUpload
+ * @param {Object} props.expandedRows
+ * @param {Object} props.collapsedRows
+ * @param {Function} props.onToggleExpand
  */
 function ResultPanel({
   result,
@@ -27,7 +31,11 @@ function ResultPanel({
   draggedDomain,
   sortConfig,
   handleSort,
-  formatDateCell
+  formatDateCell,
+  onRowUpload,
+  expandedRows,
+  collapsedRows,
+  onToggleExpand
 }) {
   return (
     <div className={styles.resultPanel}>
@@ -44,6 +52,10 @@ function ResultPanel({
           sortConfig={sortConfig}
           handleSort={handleSort}
           formatDateCell={formatDateCell}
+          onRowUpload={onRowUpload}
+          expandedRows={expandedRows}
+          collapsedRows={collapsedRows}
+          onToggleExpand={onToggleExpand}
         />
       ) : (
         <pre className={styles.jsonResult}>
@@ -65,6 +77,10 @@ ResultPanel.propTypes = {
   sortConfig: PropTypes.object,
   handleSort: PropTypes.func.isRequired,
   formatDateCell: PropTypes.func.isRequired,
+  onRowUpload: PropTypes.func.isRequired,
+  expandedRows: PropTypes.object,
+  collapsedRows: PropTypes.object,
+  onToggleExpand: PropTypes.func.isRequired,
 };
 
 export default ResultPanel;

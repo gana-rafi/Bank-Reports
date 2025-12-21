@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function useTableRows(result, sortConfig) {
+function useTableRows(result, sortConfig, expandedRows = {}) {
   const [tableRows, setTableRows] = useState([]);
   const [domainSums, setDomainSums] = useState({});
 
@@ -9,6 +9,33 @@ function useTableRows(result, sortConfig) {
       setTableRows(getSortedRows(result.report, sortConfig));
     }
   }, [result, sortConfig]);
+
+  // Recalculate domain sums when tableRows or expandedRows change
+  useEffect(() => {
+    const sums = {};
+    
+    // Calculate sums from main rows
+    for (let i = 0; i < tableRows.length; i++) {
+      const row = tableRows[i];
+      const subRows = expandedRows[i] || [];
+      
+      if (subRows.length > 0) {
+        // If row has sub-rows, use sub-row domains for sums (not parent domain)
+        for (const subRow of subRows) {
+          if (subRow.domain && typeof subRow.amount === 'number') {
+            sums[subRow.domain] = (sums[subRow.domain] || 0) + subRow.amount;
+          }
+        }
+      } else {
+        // No sub-rows, use the row's own domain
+        if (row.domain && typeof row.amount === 'number') {
+          sums[row.domain] = (sums[row.domain] || 0) + row.amount;
+        }
+      }
+    }
+    
+    setDomainSums(sums);
+  }, [tableRows, expandedRows]);
 
   function getSortedRows(rows, config) {
     if (!config) return rows;
@@ -32,17 +59,6 @@ function useTableRows(result, sortConfig) {
       updated[rowIdx] = { ...updated[rowIdx], domain: newDomain };
       return updated;
     });
-    setDomainSums(prev => {
-      const updatedRows = [...tableRows];
-      updatedRows[rowIdx] = { ...updatedRows[rowIdx], domain: newDomain };
-      const sums = {};
-      for (const row of updatedRows) {
-        if (row.domain && typeof row.amount === 'number') {
-          sums[row.domain] = (sums[row.domain] || 0) + row.amount;
-        }
-      }
-      return sums;
-    });
   };
 
   const handleDrop = (rowIdx, draggedDomain) => {
@@ -51,17 +67,6 @@ function useTableRows(result, sortConfig) {
         const updated = [...prev];
         updated[rowIdx] = { ...updated[rowIdx], domain: draggedDomain };
         return updated;
-      });
-      setDomainSums(prev => {
-        const updatedRows = [...tableRows];
-        updatedRows[rowIdx] = { ...updatedRows[rowIdx], domain: draggedDomain };
-        const sums = {};
-        for (const row of updatedRows) {
-          if (row.domain && typeof row.amount === 'number') {
-            sums[row.domain] = (sums[row.domain] || 0) + row.amount;
-          }
-        }
-        return sums;
       });
     }
   };
