@@ -19,6 +19,7 @@ class Domain(strenum.StrEnum):
     BUSINESS = 'עסק'
     HOBBIES = 'תחביבים'
     GIFTS = 'מתנות'
+    INCOME = 'הכנסות'
 
 
 _BUSINESSES = None
