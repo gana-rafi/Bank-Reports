@@ -75,7 +75,7 @@ def parse(filename):
                                             datetime.datetime.strptime(row['תאריך רכישה'], '%d/%m/%Y'),
                                             billing_date,
                                             row['שם בית עסק'],
-                                            amount,
+                                            -(amount),
                                             row['מטבע מקור'],
                                             row['סכום חיוב'],
                                             row['מטבע לחיוב'],

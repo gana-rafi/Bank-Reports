@@ -76,6 +76,52 @@ function App() {
     }));
   };
 
+  // Handle row deletion for both main rows and sub-rows
+  const handleRowDelete = (rowIdx, isSubRow = false, parentIndex = null) => {
+    if (isSubRow && parentIndex !== null) {
+      // Delete sub-row from expandedRows
+      setExpandedRows(prev => {
+        const parentSubRows = prev[parentIndex] || [];
+        const updatedSubRows = parentSubRows.filter((_, idx) => idx !== rowIdx);
+        return {
+          ...prev,
+          [parentIndex]: updatedSubRows
+        };
+      });
+    } else {
+      // Delete main row
+      setTableRows(prev => prev.filter((_, idx) => idx !== rowIdx));
+      // Also delete any expanded sub-rows for this row and adjust indices
+      setExpandedRows(prev => {
+        const newExpanded = {};
+        Object.keys(prev).forEach(key => {
+          const keyNum = parseInt(key);
+          if (keyNum < rowIdx) {
+            newExpanded[keyNum] = prev[key];
+          } else if (keyNum > rowIdx) {
+            // Shift indices down for rows after the deleted one
+            newExpanded[keyNum - 1] = prev[key];
+          }
+          // Skip the deleted row's sub-rows
+        });
+        return newExpanded;
+      });
+      // Also adjust collapsedRows indices
+      setCollapsedRows(prev => {
+        const newCollapsed = {};
+        Object.keys(prev).forEach(key => {
+          const keyNum = parseInt(key);
+          if (keyNum < rowIdx) {
+            newCollapsed[keyNum] = prev[key];
+          } else if (keyNum > rowIdx) {
+            newCollapsed[keyNum - 1] = prev[key];
+          }
+        });
+        return newCollapsed;
+      });
+    }
+  };
+
   // Handle drop on both main rows and sub-rows
   const handleDropWithSubRows = (rowIdx, domain, isSubRow = false, parentIndex = null) => {
     if (!domain) return;
@@ -306,6 +352,7 @@ function App() {
             handleSort={handleSort}
             formatDateCell={formatDateCell}
             onRowUpload={openRowUploadModal}
+            onRowDelete={handleRowDelete}
             expandedRows={expandedRows}
             collapsedRows={collapsedRows}
             onToggleExpand={handleToggleExpand}

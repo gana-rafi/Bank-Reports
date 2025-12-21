@@ -19,6 +19,7 @@ function TransactionTable({
   handleSort,
   formatDateCell,
   onRowUpload,
+  onRowDelete,
   expandedRows = {},
   collapsedRows = {},
   onToggleExpand
@@ -63,9 +64,29 @@ function TransactionTable({
                 >
                   <i className="fa-solid fa-upload"></i>
                 </button>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => onRowDelete(rowIndex, false, null)}
+                  title="Delete row"
+                  type="button"
+                >
+                  <i className="fa-solid fa-trash"></i>
+                </button>
               </div>
             )}
-            {isSubRow && <span className={styles.subRowIndicator}>↳</span>}
+            {isSubRow && (
+              <div className={styles.subRowActions}>
+                <span className={styles.subRowIndicator}>↳</span>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => onRowDelete(rowIndex, true, parentIndex)}
+                  title="Delete sub-row"
+                  type="button"
+                >
+                  <i className="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            )}
           </td>
           {columns.map((col, colIdx) => (
             <td
@@ -157,6 +178,8 @@ TransactionTable.propTypes = {
   formatDateCell: PropTypes.func.isRequired,
   /** Function to handle upload button click for a row. */
   onRowUpload: PropTypes.func.isRequired,
+  /** Function to handle delete button click for a row. */
+  onRowDelete: PropTypes.func.isRequired,
   /** Object containing expanded sub-rows indexed by parent row index. */
   expandedRows: PropTypes.object,
   /** Object tracking which rows are collapsed. */

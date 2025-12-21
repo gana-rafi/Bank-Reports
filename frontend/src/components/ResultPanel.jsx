@@ -17,6 +17,7 @@ import styles from '../styles/ResultPanel.module.css';
  * @param {Function} props.handleSort
  * @param {Function} props.formatDateCell
  * @param {Function} props.onRowUpload
+ * @param {Function} props.onRowDelete
  * @param {Object} props.expandedRows
  * @param {Object} props.collapsedRows
  * @param {Function} props.onToggleExpand
@@ -33,6 +34,7 @@ function ResultPanel({
   handleSort,
   formatDateCell,
   onRowUpload,
+  onRowDelete,
   expandedRows,
   collapsedRows,
   onToggleExpand
@@ -53,6 +55,7 @@ function ResultPanel({
           handleSort={handleSort}
           formatDateCell={formatDateCell}
           onRowUpload={onRowUpload}
+          onRowDelete={onRowDelete}
           expandedRows={expandedRows}
           collapsedRows={collapsedRows}
           onToggleExpand={onToggleExpand}
@@ -78,6 +81,7 @@ ResultPanel.propTypes = {
   handleSort: PropTypes.func.isRequired,
   formatDateCell: PropTypes.func.isRequired,
   onRowUpload: PropTypes.func.isRequired,
+  onRowDelete: PropTypes.func.isRequired,
   expandedRows: PropTypes.object,
   collapsedRows: PropTypes.object,
   onToggleExpand: PropTypes.func.isRequired,
