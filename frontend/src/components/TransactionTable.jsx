@@ -91,6 +91,11 @@ function TransactionTable({
                   ? JSON.stringify(row[col])
                   : formatDateCell(row[col])
               )}
+              {col === "action" && isSubRow && (
+              <div className={styles.subRowInfo}>
+                {row.buisness && <span className={styles.businessName}>{row.buisness}</span>}
+              </div>
+            )}
             </td>
           ))}
         </tr>

@@ -43,8 +43,8 @@
 
 /* Actions column */
 .actionsCell {
-  width: 50px;
-  text-align: center;
+  min-width: 50px;
+  text-align: left;
   vertical-align: middle;
 }
 
@@ -53,6 +53,21 @@
   gap: 6px;
   justify-content: center;
   align-items: center;
+}
+
+.subRowInfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.businessName {
+  color: #555;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .uploadButton {
