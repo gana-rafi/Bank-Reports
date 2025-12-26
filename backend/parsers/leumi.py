@@ -3,6 +3,9 @@ import pandas as pd
 from datetime import datetime
 from .bank import Corp, BankTransaction
 from editor import actions
+import logging
+
+logger = logging.getLogger(__name__)
 
 def parse_account_number(cell):
     return cell.replace('\u200e', '').replace('\u200f', '').split(' ')[-1]
@@ -28,11 +31,10 @@ def parse_transaction(filename):
     account_number = find_account_number(pd.read_excel(filename))
     table_start = find_report_start(pd.read_excel(filename))
     xls_report = pd.read_excel(filename, sheet_name=0, header=table_start+1)
-
     report = []
+    logger.info(f"Processing transactions for {account_number}")
     for pd_row in xls_report.iterrows():
         row = pd_row[1]
-        print(row)
         amount = row['בחובה'] * -1 if math.isnan(row['בזכות']) else row['בזכות']
 
         details = row['תאור מורחב']
@@ -42,17 +44,17 @@ def parse_transaction(filename):
             transaction = BankTransaction(filename,
                                         Corp.LEUMI,
                                         account_number,
-                                        datetime.strptime(row['תאריך'], '%d/%m/%y'),
+                                        row['תאריך'].to_pydatetime(),
                                         row['תיאור'],
                                         details,
                                         row['אסמכתא'],
                                         amount,
                                         row['היתרה בש"ח'],
-                                        datetime.strptime(row['תאריך ערך'], '%d/%m/%y'),
+                                        row['תאריך ערך'].to_pydatetime(),
                                         actions.parse_action(row['תיאור']))
         except Exception as e:
-            print(e)
-            print("FIX THIS. REPORT IS NOT CONSISTANT!!!")
+            logger.error(f"Error processing row: {e}")
+            logger.error("FIX THIS. REPORT IS NOT CONSISTANT!!!")
             break
         report.append(transaction)
 
