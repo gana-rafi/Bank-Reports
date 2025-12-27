@@ -35,7 +35,7 @@ def parse_transaction(filename):
     logger.info(f"Processing transactions for {account_number}")
     for pd_row in xls_report.iterrows():
         row = pd_row[1]
-        amount = row['בחובה'] * -1 if math.isnan(row['בזכות']) else row['בזכות']
+        amount =  row['בזכות'] - row['בחובה']
 
         details = row['תאור מורחב']
         details = details if details == details else ''
